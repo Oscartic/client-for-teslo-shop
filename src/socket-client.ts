@@ -4,7 +4,8 @@ import { Manager, Socket } from "socket.io-client"
 let socket: Socket;
 export const connectToServer = (token: string) => {
 
-    const manager = new Manager('http://localhost:3000/socket.io/socket.io.js', {
+    // const manager = new Manager('http://localhost:3000/socket.io/socket.io.js', {
+    const manager = new Manager('https://teslo-shop-256l.onrender.com/socket.io/socket.io.min.js', {
         extraHeaders: {
             Authorization: `Bearer ${token}`
         }
@@ -17,13 +18,13 @@ export const connectToServer = (token: string) => {
 }
 
 const addListener = () => {
-    const serverStatusLabel = document.querySelector('#server-status')!;
-    const clientsUL = document.querySelector('#clients');
+    const serverStatusLabel = document.querySelector<HTMLElement>('#server-status')!;
+    const clientsUL = document.querySelector<HTMLUListElement>('#clients')!;
 
-    const messageForm = document.querySelector('#message-form');
-    const messageInput = document.querySelector('#message-input');
+    const messageForm = document.querySelector<HTMLFormElement>('#message-form')!;
+    const messageInput = document.querySelector<HTMLInputElement>('#message-input')!;
 
-    const MessageUl = document.querySelector<HTMLUListElement>("#message-ul");
+    const MessageUl = document.querySelector<HTMLUListElement>('#message-ul')!;
 
     socket.on('connect', () => {
         serverStatusLabel.innerHTML = 'Online';
@@ -48,7 +49,7 @@ const addListener = () => {
         clientsUL.innerHTML = clientsHtml 
     });
 
-    messageForm.addEventListener('submit', () => {
+    messageForm.addEventListener('submit', (event) => {
         event.preventDefault();
         if(messageInput.value.trim().length <= 0) return
 
